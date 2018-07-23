@@ -19,7 +19,7 @@ const store = createStore(reducer);
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router>
+    <Router basename="/react-ecommerce">
       <Routes />
     </Router>
   </Provider>), document.getElementById('root'));

@@ -14,7 +14,7 @@ const API_JOKES = 'https://icanhazdadjoke.com/';
 const API_ITEMS = 'https://bedu.safemeet.space/items';
 // State of the App
 const initialState = {
-  userData: JSON.parse( localStorage.getItem('userData') ),
+  userData: JSON.parse(localStorage.getItem('userData')),
   token: localStorage.getItem('token'),
   basket: localStorage.getItem('basket') || [],
   joke: null,
@@ -31,7 +31,7 @@ export const removeItemToBasket = (data) => ({ type: DELETE_ITEM_TO_BASKET, payl
 export const messageAction = (message) => ({ type: INITIAL_MESSAGE, payload: message });
 export const addItems = (data) => ({ type: ADD_ITEMS, payload: data });
 // Asynchronous functions with redux-thunk
-export const asyncMessage = () => (dispatch) => {
+export const getMessage = () => (dispatch) => {
   const request = axios({
     method: 'GET',
     url: API_JOKES,
@@ -92,7 +92,11 @@ export default (state = initialState, action) => {
     case INITIAL_MESSAGE:
       return { ...state, joke: action.payload };
     case ADD_ITEMS:
-      return { ...state, asyncItems: action.payload };
+      console.log('ADD_ITEMS', action.payload);
+      console.log('ADD_ITEMS', state.asyncItems);
+      const items = [...state.asyncItems, ...action.payload];
+      console.log('items', items);
+      return { ...state, asyncItems: items };
     default:
       return state;
   }

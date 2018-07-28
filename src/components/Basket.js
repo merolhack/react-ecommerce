@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import ConfirmDeleteItem from './ConfirmDeleteItem';
 
+const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce' : '/';
 class Basket extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +61,7 @@ class Basket extends Component {
    * 
    */
   handleBuy = () => {
-    window.location.replace('/confirm');
+    window.location.replace(`${baseName}confirm`);
   }
 
   render() {

@@ -12,6 +12,8 @@ import { removeToken, removeUserData } from '../reducer';
 import UserHeader from './UserHeader';
 import ConfirmDeleteItem from './ConfirmDeleteItem';
 
+const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce' : '/';
+
 const TableContainer = styled.table`
   width: 100%;
   border: 1px solid grey;
@@ -69,7 +71,7 @@ class Confirm extends Component {
    * 
    */
   handleBuyItems = () => {
-    window.location.replace('/checkout');
+    window.location.replace(`${baseName}checkout`);
   }
 
   /**

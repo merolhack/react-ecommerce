@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroller';
 // CSS Styles
 import styled from 'styled-components';
 // Material UI
@@ -37,6 +38,11 @@ class ProductList extends Component {
     this.props.addItemToBasket(data);
   }
 
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate', 123);
+    return true;
+  }
+
   render() {
     const { items } = this.props;
     return (
@@ -45,7 +51,13 @@ class ProductList extends Component {
           Listado de productos
         </h4>
         <div>
-          {items.map((element, index) => {
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={this.props.get}
+            hasMore={this.props.has}
+            loader={<div className="loader" key={0}>Loading ...</div>}
+          >
+        {items.map((element, index) => {
             const marginLeft = (index===3) ? 0 : '' ;
             return (
               <Card key={index} className="four columns" style={{...CardStyle, marginLeft}}>
@@ -65,6 +77,7 @@ class ProductList extends Component {
               </Card>
             );
           })}
+          </InfiniteScroll>
         </div>
       </div>
     );

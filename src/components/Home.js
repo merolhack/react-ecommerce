@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // CSS Styles
 import styled from 'styled-components';
 // Reducer methods
-import { removeToken, removeUserData, asyncMessage, getItems } from '../reducer';
+import { removeToken, removeUserData, getMessage, getItems } from '../reducer';
 // Child components
 import UserHeader from './UserHeader';
 import ProductList from './ProductList';
@@ -107,14 +107,43 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hasMoreItems: false,
     };
   }
 
   componentDidMount() {
     // Gent the message from the API
-    this.props.asyncMessage();
-    this.props.getItems();
+    this.props.getMessage();
+    this.getMoreItems();
+    window.addEventListener('scroll', this.handleScroll);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  }
+
+  handleScroll = () => {
+    const wrappedElement = document.getElementById('product-list');
+    if (this.isBottom(wrappedElement)) {
+      this.setState({
+        hasMoreItems: true
+      });
+    }
+  };
+
+  /**
+   * Get the items from the store
+   */
+  getMoreItems = () => {
+    this.props.getItems();
+    this.setState({
+      hasMoreItems: false
+    });
+  };
 
   /**
    * Handle the click on the close session button
@@ -127,7 +156,6 @@ class Home extends Component {
 
   render() {
     const { userData, joke, asyncItems } = this.props;
-    console.log('asyncItems', asyncItems);
     return (
       <div className="container">
         <div className="row">
@@ -143,8 +171,8 @@ class Home extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="nine columns">
-            <ProductList items={asyncItems} />
+          <div className="nine columns" id="product-list">
+            <ProductList items={asyncItems} get={this.getMoreItems} has={this.state.hasMoreItems} />
           </div>
           <div className="three columns">
             <UserHeader userData={userData} closeSession={this.handleCloseSessionClick} />
@@ -163,7 +191,7 @@ class Home extends Component {
 }
 
 const mapDispatch = {
-  removeToken, removeUserData, asyncMessage, getItems
+  removeToken, removeUserData, getMessage, getItems
 };
 
 const mapStateToProps = (state) => ({

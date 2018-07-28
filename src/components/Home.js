@@ -16,6 +16,8 @@ import Indio from '../assets/images/indio.jpg';
 import BohemiaObscura from '../assets/images/bohemia-obscura.jpg';
 import Tecate from '../assets/images/tecate.png';
 
+const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce' : '/';
+
 const items = [
   {
     name: 'XX Lager',
@@ -151,7 +153,7 @@ class Home extends Component {
   handleCloseSessionClick = () => {
     this.props.removeToken();
     this.props.removeUserData();
-    window.location.replace('/');
+    window.location.replace(baseName);
   }
 
   render() {

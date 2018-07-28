@@ -171,6 +171,13 @@ class Login extends Component {
       <div>
         <Container>
           <StyledForm onSubmit={this.handleFormSubmit}>
+            <div>
+              <p>Credenciales:</p>
+              <ul>
+                <li><strong>User:</strong> admin@email.io</li>
+                <li><strong>Pass:</strong> 123456</li>
+              </ul>
+            </div>
             <FormControl>
               <InputLabel htmlFor="name" error={email.length !== 0 && this.isEmail(email)}>Email</InputLabel>
               <Input id="name" type="email" 

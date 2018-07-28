@@ -52,7 +52,7 @@ class ProductList extends Component {
                 <CardHeader
                   title={element.name}
                 />
-                <img src={element.image} alt="" style={{width: '100%'}} />
+                <img src={element.img} alt="" style={{width: '100%'}} />
                 <CardContent>
                   <PContainer>Precio: $ {(element.price / 100).toFixed(2)}</PContainer>
                   <ButtonContainer>

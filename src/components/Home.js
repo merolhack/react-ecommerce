@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// CSS Styles
+import styled from 'styled-components';
 // Reducer methods
-import { removeToken, removeUserData } from '../reducer';
+import { removeToken, removeUserData, asyncMessage, getItems } from '../reducer';
 // Child components
 import UserHeader from './UserHeader';
 import ProductList from './ProductList';
@@ -53,11 +55,65 @@ const items = [
   }
 ];
 
+const QuoteContainer = styled.blockquote`
+  background: #303F9F;
+  color: #ffffff;
+
+  padding: 20px;
+  padding-left: 50px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(#222222, 0.12);
+
+  position: relative;
+  overflow: hidden;
+  min-height: 120px;
+
+  p {
+    font-size: 22px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 80%;
+  }
+  cite {
+    font-size: 16px;
+    margin-top: 10px;
+    display: block;
+    font-weight: 200;
+    opacity: 0.8;
+  }
+  &:before {
+    font-family: Georgia, serif;
+    content: "“";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 5em;
+    color: rgba(#3F51B5, 0.8);
+    font-weight: normal;
+  }
+  &:after {
+    font-family: Georgia, serif;
+    content: "”";
+    position: absolute;
+    bottom: -110px;
+    line-height: 100px;
+    right: -32px;
+    font-size: 25em;
+    color: rgba(#3F51B5, 0.8);
+    font-weight: normal;
+  }
+`;
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+
+  componentDidMount() {
+    // Gent the message from the API
+    this.props.asyncMessage();
+    this.props.getItems();
   }
 
   /**
@@ -70,12 +126,25 @@ class Home extends Component {
   }
 
   render() {
-    const { userData } = this.props;
+    const { userData, joke, asyncItems } = this.props;
+    console.log('asyncItems', asyncItems);
     return (
       <div className="container">
         <div className="row">
+          <div className="twelve columns">
+            <QuoteContainer>
+              <p>
+                { joke }
+              </p>
+              <cite>
+                Dad
+              </cite>
+            </QuoteContainer>
+          </div>
+        </div>
+        <div className="row">
           <div className="nine columns">
-            <ProductList items={items} />
+            <ProductList items={asyncItems} />
           </div>
           <div className="three columns">
             <UserHeader userData={userData} closeSession={this.handleCloseSessionClick} />
@@ -94,12 +163,14 @@ class Home extends Component {
 }
 
 const mapDispatch = {
-  removeToken, removeUserData
+  removeToken, removeUserData, asyncMessage, getItems
 };
 
 const mapStateToProps = (state) => ({
   token: state.token,
   userData: state.userData,
+  joke: state.joke,
+  asyncItems: state.asyncItems,
 });
 
 export default connect(mapStateToProps, mapDispatch)(Home);

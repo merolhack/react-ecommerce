@@ -71,7 +71,7 @@ class Confirm extends Component {
    * 
    */
   handleBuyItems = () => {
-    window.location.replace(`${baseName}/checkout`);
+    window.location.replace(`${baseName}checkout`);
   }
 
   /**

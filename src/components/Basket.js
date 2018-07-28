@@ -61,7 +61,7 @@ class Basket extends Component {
    * 
    */
   handleBuy = () => {
-    window.location.replace(`${baseName}/confirm`);
+    window.location.replace(`${baseName}confirm`);
   }
 
   render() {

@@ -20,7 +20,7 @@ const store = createStore(
   reducer,
   applyMiddleware(ReduxThunk),
 );
-const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce' : '/';
+const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce/' : '/';
 
 ReactDOM.render((
   <Provider store={store}>

@@ -147,7 +147,7 @@ class Confirm extends Component {
           <div className="twelve columns">
             <hr />
             <p>
-              <a href="/">
+              <a href={baseName}>
                 Añadir más productos
               </a>
             </p>

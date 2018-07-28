@@ -26,6 +26,8 @@ const ExpirationContainer = styled.div`
   grid-gap: 10px;
 `;
 
+const baseName = (process.env.NODE_ENV !== 'development') ? '/react-ecommerce' : '/';
+
 class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -150,7 +152,7 @@ class Checkout extends Component {
           <div className="twelve columns">
             <hr />
             <p>
-              <a href="/">
+              <a href={baseName}>
                 Ir al inicio
               </a>
             </p>

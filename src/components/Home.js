@@ -184,7 +184,7 @@ class Home extends Component {
         <div className="row">
           <div className="twelve columns">
             <hr />
-            <p><a href="/foo">Ir a foo</a></p>
+            <p><a href={`${baseName}foo`}>Ir a foo</a></p>
           </div>
         </div>
       </div>
